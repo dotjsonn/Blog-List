@@ -1,4 +1,8 @@
-POST http://localhost:3003/api/blogs
+GET http://localhost:3003/api/blogs
+
+
+###
+ http://localhost:3003/api/blogs
 Content-Type: application/json
 
 {
@@ -6,4 +10,28 @@ Content-Type: application/json
   "author": "Neil Feetweak",
   "url": "https://www.google.com/",
   "likes": 20
+}
+
+###
+
+POST http://localhost:3003/api/blogss
+Content-Type: application/json
+
+{
+  "title": "Intro to Web Development",
+  "author": "Neil Feetweak",
+  "url": "https://www.google.com/",
+  "likes": 20
+}
+
+###
+
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+
+{
+  "title": "Complete Backend Course",
+  "author": "JavaScript Mastery",
+  "url": "https://www.youtube.com/watch?v=rOpEN1JDaD0&t=10809s",
+  "likes": 24000
 }
