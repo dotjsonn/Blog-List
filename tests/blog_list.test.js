@@ -19,10 +19,18 @@ test('returns blog posts in JSON format', async () => {
     .expect(200)
     .expect('Content-Type', /application\/json/)
 })
+
 // returns the correct amount of blog posts
 test('returns the correct amount of blog posts', async () => {
   const result = await api.get('/api/blogs')  
   assert.strictEqual(result.body.length, helper.initialBlogs.length)
+})
+
+// check if unique identifier property is named id
+test('check if unique identifier property is named id', async () => {
+  const blogsToSee = await helper.blogsInDb()
+  const checkingTheIdKey = blogsToSee.every(item => Object.hasOwn(item, 'id'))
+  assert(checkingTheIdKey)
 })
 
 after(async () => {
