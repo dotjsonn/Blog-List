@@ -55,6 +55,25 @@ test('a valid blog can be added', async () => {
   assert(titles.includes("First class tests"))
 })
 
+// test post request with no likes property
+test('a valid blog can be added', async () => {
+  const blogObject = {
+    title: "Type wars",
+    author: "Robert C. Martin",
+    url: "http://blog.cleancoder.com/uncle-bob/2016/05/01/TypeWars.html",
+  }
+
+  await api
+    .post('/api/blogs')
+    .send(blogObject)
+    .expect(201)
+    .expect('Content-Type', /application\/json/)
+
+  const blogsAtEnd = await helper.blogsInDb()
+
+  assert.strictEqual(blogsAtEnd.length, helper.initialBlogs.length + 1)
+})
+
 after(async () => {
   await mongoose.connection.close()
 })
