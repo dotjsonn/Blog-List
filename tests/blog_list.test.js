@@ -74,6 +74,40 @@ test('a valid blog can be added', async () => {
   assert.strictEqual(blogsAtEnd.length, helper.initialBlogs.length + 1)
 })
 
+// test post request with no title property
+test('a blog with no title cannot be added', async () => {
+  const blogObject = {
+    author: "Robert C. Martin",
+    url: "http://blog.cleancoder.com/uncle-bob/2016/05/01/TypeWars.html",
+  }
+
+  await api
+    .post('/api/blogs')
+    .send(blogObject)
+    .expect(400)
+
+  const blogsAtEnd = await helper.blogsInDb()
+
+  assert.strictEqual(blogsAtEnd.length, helper.initialBlogs.length)
+})
+
+// test post request with no url property
+test('a blog with no url cannot be added', async () => {
+  const blogObject = {
+    title: "Type wars",
+    author: "Robert C. Martin",
+  }
+
+  await api
+    .post('/api/blogs')
+    .send(blogObject)
+    .expect(400)
+
+  const blogsAtEnd = await helper.blogsInDb()
+
+  assert.strictEqual(blogsAtEnd.length, helper.initialBlogs.length)
+})
+
 after(async () => {
   await mongoose.connection.close()
 })
