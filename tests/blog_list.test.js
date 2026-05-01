@@ -33,6 +33,28 @@ test('check if unique identifier property is named id', async () => {
   assert(checkingTheIdKey)
 })
 
+// test post request
+test('a valid blog can be added', async () => {
+  const blogObject = {
+    title: "First class tests",
+    author: "Robert C. Martin",
+    url: "http://blog.cleancoder.com/uncle-bob/2017/05/05/TestDefinitions.htmll",
+    likes: 10
+  }
+
+  await api
+    .post('/api/blogs')
+    .send(blogObject)
+    .expect(201)
+    .expect('Content-Type', /application\/json/)
+
+  const blogsAtEnd = await helper.blogsInDb()
+  const titles = blogsAtEnd.map(blog => blog.title)
+
+  assert.strictEqual(blogsAtEnd.length, helper.initialBlogs.length + 1)
+  assert(titles.includes("First class tests"))
+})
+
 after(async () => {
   await mongoose.connection.close()
 })
