@@ -103,6 +103,27 @@ describe('when initially some blogs saved', () => {
       assert.strictEqual(blogsAtEnd.length, helper.initialBlogs.length - 1)
     })
   })
+
+  describe('updating of a blog', () => {
+    test('updating the information of an individual blog post', async () => {
+      const blogsAtStart = await helper.blogsInDb()
+      const blogToBeUpdated = blogsAtStart[0]
+
+      const newLike = 99
+
+      const updated = await api
+        .put(`/api/blogs/${blogToBeUpdated.id}`)
+        .send({...blogToBeUpdated.body, likes: newLike})
+        .expect(200)
+        .expect('Content-Type', /application\/json/)
+      
+      const blogsAtEnd = await helper.blogsInDb()
+      
+      assert.strictEqual(blogsAtEnd.length, helper.initialBlogs.length)      
+      
+      assert.deepStrictEqual({...blogToBeUpdated, likes: newLike}, updated.body )
+    })
+  })
 })
 
 after(async () => {
