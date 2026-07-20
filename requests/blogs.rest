@@ -1,0 +1,36 @@
+POST http://localhost:3001/api/blogs
+Content-Type: application/json
+
+{
+  "title": "Introduction to React Hooks",
+  "author": "Jane Doe",
+  "url": "https://example.com",
+  "likes": 142,
+  "userId": "6a5b60e3faa96f5f9cb8578d"
+}
+
+###
+POST http://localhost:3001/api/blogs
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imphc29uMjU4MiIsImlkIjoiNmE1ZGYwODU2NWQwYzQ0ZjAxMDlhOTNhIiwiaWF0IjoxNzg0NTQxMzMzfQ.1zE-nz_pRY7_9SiHeP-Njsb47vikVV0jz5MCt6CUP_8
+Content-Type: application/json
+
+{
+  "title": "Mastering CSS Grid",
+  "author": "John Smith",
+  "url": "https://example.com",
+  "likes": 85
+}
+
+
+###
+
+GET http://localhost:3001/api/blogs
+
+
+### 
+GET http://localhost:3001/api/blogs/12
+
+###
+
+DELETE http://localhost:3001/api/blogs/6a5cb2388cc196838df6324d
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imphc29uMjU4MiIsImlkIjoiNmE1Y2IyMWM4Y2MxOTY4MzhkZjYzMjRjIiwiaWF0IjoxNzg0NDYwMDM5fQ.TAHsez4fcgMYajETp_eXWWQtSh7AQVI5GgTwiSapOs4
