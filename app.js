@@ -1,25 +1,33 @@
 const express = require('express')
 const mongoose = require('mongoose')
-const blogsRouter = require('./controllers/blogs')
-const logger = require('./utils/logger')
 const config = require('./utils/config')
+const logger = require('./utils/logger')
 const middleware = require('./utils/middleware')
+const blogsRouter = require('./controllers/blogs')
+const usersRouter = require('./controllers/users')
+const loginRouter = require('./controllers/login')
 
 const app = express()
 
-logger.info('Connecting to', config.MONGODB_URI)
+logger.info('Connecting to MongoDB', config.MONGODB_URI)
+
 mongoose.connect(config.MONGODB_URI, { family: 4 })
   .then(() => {
-    logger.info('Connected to MongoDB')
+    logger.info('Connected to MONGODB')
   })
   .catch(error => {
-    logger.error('error connecting to MongoDB', error.message)
+    logger.error('Error connecting to MONGODB', error.message)
   })
 
 app.use(express.json())
 app.use(middleware.requestLogger)
+app.use(middleware.tokenExtractor)
 
+app.use('/api/login', loginRouter)
 app.use('/api/blogs', blogsRouter)
+app.use('/api/users', usersRouter)
+
+
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
 
