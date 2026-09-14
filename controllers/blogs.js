@@ -66,7 +66,7 @@ blogsRouter.delete('/:id', userExtractor, async (req, res) => {
   
 })
 
-blogsRouter.put('/:id', userExtractor, async (req, res) => {
+blogsRouter.put('/:id', async (req, res) => {
   const { title, author, url, likes } = req.body
 
   const blog = await Blog.findById(req.params.id)
@@ -75,17 +75,11 @@ blogsRouter.put('/:id', userExtractor, async (req, res) => {
     return res.status(404).end()
   }
 
-  const user = req.user
-  
-  if(!user) {
-    return res.status(400).json({error: 'user missing'})
-  }
 
   blog.title = title
   blog.author = author
   blog.url = url
   blog.likes = likes
-  blog.user = user._id.toString()
 
   const updatedBlog = await blog.save()
   res.json(updatedBlog)
